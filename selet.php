@@ -1,6 +1,5 @@
-<?php
-$Tecnologias = ['PHP', 'HTML','JAVASCRIPT','COBOL']
-echo ("você selecionou: ")
+<?php 
+include ('dados.php');
 ?>
 <!DOCTYPE html>
 <html lang="pt-br">
@@ -11,14 +10,14 @@ echo ("você selecionou: ")
     <title>Document</title>
 </head>
 <body>
-<form method="post> 
+<form method="POST" action="dados.php"> 
        <select name="selecao"> 
-       <option valeu="PHP">PHP</option>
-       <option valeu="HTML">HTML</option>
-       <option valeu="JAVASCRIPT">JAVASCRIPT</option>
-       <option valeu="COBOL">COBOL</option>
-       </select>
-       <input type="submit" value"Enviar"
+       <?php foreach ($Tecnologias as $Tecnologia) {?>
+        <option valeu="<?php echo $Tecnologia; ?>" ><?php echo $Tecnologia; ?> </option>
+       <?php 
+       } ?>
+
+       <input type="submit" value="Enviar"/>
 </form>
     
 </body>
