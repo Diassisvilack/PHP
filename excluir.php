@@ -1,16 +1,17 @@
 <?php
-require 'conexao.php';
+$id = $_GET['id'] ?? 0;
 
-$id = $_GET['id'] ?? '';
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=cadastro", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-if ($id !== '') {
     $sql = "DELETE FROM pessoas WHERE id = :id";
     $stmt = $pdo->prepare($sql);
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
 
-    echo "Pessoa excluída com sucesso!";
-} else {
-    echo "ID inválido.";
+    echo "Registro excluído com sucesso! <a href='index.html'>Voltar</a>";
+} catch (PDOException $e) {
+    echo "Erro: " . $e->getMessage();
 }
 ?>

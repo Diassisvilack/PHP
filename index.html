@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Pessoas</title>
+    <style>
+        body { font-family: Arial, sans-serif; background-color: #f4f4f4; }
+        .container { width: 300px; margin: 30px auto; background: #fff; padding: 20px; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1); }
+        input[type="text"], input[type="email"], input[type="number"] {
+            width: 100%; padding: 8px; margin: 8px 0; box-sizing: border-box;
+        }
+        input[type="submit"] {
+            width: 100%; padding: 10px; background-color: #28a745; color: white; border: none; cursor: pointer;
+        }
+        input[type="submit"]:hover { background-color: #218838; }
+        hr { margin: 40px 0; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2>Cadastro</h2>
+    <form action="salvar.php" method="POST">
+        <label>Nome:</label>
+        <input type="text" name="nome" required>
+        <label>Email:</label>
+        <input type="email" name="email" required>
+        <input type="submit" value="Cadastrar">
+    </form>
+</div>
+
+<div class="container">
+    <h2>Buscar por ID</h2>
+    <form action="pesquisar.php" method="GET">
+        <label>ID:</label>
+        <input type="number" name="id" required>
+        <input type="submit" value="Buscar">
+    </form>
+</div>
+
+<div class="container">
+    <h2>Editar</h2>
+    <form action="editar.php" method="POST">
+        <label>ID:</label>
+        <input type="number" name="id" required>
+        <label>Novo Nome:</label>
+        <input type="text" name="nome" required>
+        <label>Novo Email:</label>
+        <input type="email" name="email" required>
+        <input type="submit" value="Atualizar">
+    </form>
+</div>
+
+<div class="container">
+    <h2>Excluir</h2>
+    <form action="excluir.php" method="GET">
+        <label>ID:</label>
+        <input type="number" name="id" required>
+        <input type="submit" value="Excluir">
+    </form>
+</div>
+
+</body>
+</html>

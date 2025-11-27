@@ -1,26 +1,19 @@
-<?php 
-require 'conexao.php';
+<?php
+$nome = $_POST['nome'] ?? '';
+$email = $_POST['email'] ?? '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $nome = $_POST['nome'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $mae = $_POST['mae'] ?? '';
-    $pai = $_POST['pai'] ?? '';
-    $data_nascimento = $_POST['data_nascimento'] ?? '';
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=cadastro", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "INSERT INTO pessoas (nome, email, mae, pai, data_nascimento)
-            VALUES (:nome, :email, :mae, :pai, :data_nascimento)";
+    $sql = "INSERT INTO pessoas (nome, email) VALUES (:nome, :email)";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nome', $nome);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':mae', $mae);
-    $stmt->bindParam(':pai', $pai);
-    $stmt->bindParam(':data_nascimento', $data_nascimento);
     $stmt->execute();
 
-    echo "<p>Dados cadastrados com sucesso!</p><br>";
-    echo "<p><a href='index.html'>Voltar à Página Inicial</a></p>";
-} else {
-    echo "<p>Requisição inválida.</p>";
+    echo "Cadastro realizado com sucesso! <a href='index.html'>Voltar</a>";
+} catch (PDOException $e) {
+    echo "Erro: " . $e->getMessage();
 }
 ?>

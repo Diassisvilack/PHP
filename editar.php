@@ -1,26 +1,21 @@
 <?php
-require 'conexao.php';
+$id = $_POST['id'] ?? 0;
+$nome = $_POST['nome'] ?? '';
+$email = $_POST['email'] ?? '';
 
-if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $id = $_POST['id'] ?? '';
-    $nome = $_POST['nome'] ?? '';
-    $email = $_POST['email'] ?? '';
-    $mae = $_POST['mae'] ?? '';
-    $pai = $_POST['pai'] ?? '';
-    $data_nascimento = $_POST['data_nascimento'] ?? '';
+try {
+    $pdo = new PDO("mysql:host=localhost;dbname=cadastro", "root", "");
+    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
-    $sql = "UPDATE pessoas SET nome = :nome, email = :email, mae = :mae, pai = :pai, data_nascimento = :data_nascimento WHERE id = :id";
+    $sql = "UPDATE pessoas SET nome = :nome, email = :email WHERE id = :id";
     $stmt = $pdo->prepare($sql);
     $stmt->bindParam(':nome', $nome);
     $stmt->bindParam(':email', $email);
-    $stmt->bindParam(':mae', $mae);
-    $stmt->bindParam(':pai', $pai);
-    $stmt->bindParam(':data_nascimento', $data_nascimento);
-    $stmt->bindParam(':id', $id, PDO::PARAM_INT);
+    $stmt->bindParam(':id', $id);
     $stmt->execute();
 
-    echo "Dados atualizados com sucesso!";
-} else {
-    echo "Requisição inválida.";
+    echo "Dados atualizados com sucesso! <a href='index.html'>Voltar</a>";
+} catch (PDOException $e) {
+    echo "Erro: " . $e->getMessage();
 }
 ?>
