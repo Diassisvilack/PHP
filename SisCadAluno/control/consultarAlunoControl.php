@@ -1,8 +1,17 @@
 <?php
-require_once '../model/alunoDTO.php'; 
-require_once '../model/alunoDAO.php';
+    require_once '../model/DTO/AlunoDTO.php';
+    require_once '../model/DAO/AlunoDAO.php';
+    require_once '../model/DAO/conexao.php'; 
+    
+    if (!empty($_GET['idExcluir'])){  
 
-$alunoDAO = new AlunoDAO();
-// A variável $listaAlunos é crucial para a view/consultarAluno.php
-$listaAlunos = $alunoDAO->consultar(); 
+        $id = $_GET['idExcluir'];
+
+        $AlunoDAO = new AlunoDAO($conexao);
+        
+        $AlunoDAO->excluirAluno($id); 
+    }
+    
+    header("Location: ../view/consultarAluno.php");
+    exit; 
 ?>

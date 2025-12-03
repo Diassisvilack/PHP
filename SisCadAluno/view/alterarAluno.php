@@ -1,63 +1,64 @@
 <?php
+    // 1. Alterar includes para AlunoDAO
+    include_once '../model/DAO/AlunoDAO.php'; 
+    include_once '../model/DAO/conexao.php';
+    
+    // Verifica se o ID foi passado via GET
+    if (!empty($_GET['id'])){
+        $id = $_GET['id'];
 
-require_once '../control/consultarAlunoControl.php'; 
-
-if (!isset($aluno) || $aluno === null) {
-    header("Location: consultarAluno.php?msg=erro_aluno_nao_encontrado");
-    exit();
-}
+        // 2. Instancia o DAO de Aluno
+        $AlunoDAO = new AlunoDAO($conexao);
+        
+        // Consulta os dados do Aluno pelo ID
+        // O resultado da consulta será armazenado na variável $aluno
+        $aluno = $AlunoDAO->consultarId($id); 
+    } else {
+        // Trata o caso de ID ausente
+        header("Location: consultarAluno.php");
+        exit;
+    }
 ?>
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <title>Alterar Aluno</title>
-    </head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alterar Aluno</title> <link rel="stylesheet" type="text/css" href="../css/estilo.css">
+</head>
 <body>
     <nav>
         <ul>
             <li><a href="../index.php">Home</a></li>
-            <li><a href="cadastrarAluno.php">Cadastrar</a></li>
-            <li><a href="consultarAluno.php">Consultar</a></li>
-        </ul>
+            <li><a href="cadastrarAluno.php">Cadastrar</a></li> <li><a href="consultarAluno.php">Consultar</a></li>   </ul>
     </nav>
-    <header>
-        <h1>Alterar Aluno</h1>
-    </header>
 
-    <form method="POST" action="../control/alterarAlunoControl.php">
-        
-        <input type="hidden" name="matricula" value="<?= htmlspecialchars($aluno->matricula) ?>" />
-        
-        <label>Nome do Aluno: </label>     
-        <input type="text" name="nome" value="<?= htmlspecialchars($aluno->nome) ?>" required />
-        <br><br>
-        
-        <label>Telefone: </label>     
-        <input type="text" name="telefone" value="<?= htmlspecialchars($aluno->telefone) ?>"/>
-        <br><br>
 
-        <label>Endereço: </label>     
-        <input type="text" name="endereco" value="<?= htmlspecialchars($aluno->endereco) ?>"/>
-        <br><br>
+<h1>Alterar Aluno</h1> <form method="POST" action="../control/alterarAlunoControl.php"> <input type="hidden" name="idAlterar" value="<?= $id; ?>" />
+    
+    <label>Nome do Aluno: </label>     
+    <input type="text" name="Nome" value="<?= $aluno->__getNome() ?>"/> 
+    <br><br>
+    
+    <label>Matrícula do Aluno: </label>      
+    <input type="text" name="Matricula" value="<?= $aluno->__getMatricula() ?>"/> 
+    <br><br>
 
-        <label>E-mail: </label>     
-        <input type="email" name="email" value="<?= htmlspecialchars($aluno->email) ?>" required />
-        <br><br>
+    <label>Telefone do Aluno: </label>       
+    <input type="text" name="Telefone" value="<?= $aluno->__getTelefone() ?>"/> 
+    <br><br>
 
-        <label>Curso:</label><br>
-        <?php
-        $cursos = ["Técnico em Informática", "Técnico em Logística", "Técnico em Administração"];
+    <label>Email do Aluno: </label>      
+    <input type="text" name="Email" value="<?= $aluno->__getEmail() ?>"/> 
+    <br><br>
+    
+    <label>Curso: </label>      
+    <input type="text" name="Curso" value="<?= $aluno->__getCurso() ?>"/> 
+    <br><br>
 
-        foreach ($cursos as $c) {
-            $checked = ($aluno->curso == $c) ? 'checked' : ''; 
-            echo "<input type='radio' name='curso' value='{$c}' {$checked} required /> {$c}<br>";
-        }
-        ?>
-        <br>
+    <input type="submit" value="Alterar" name="btnAlterar"/> 
+</form>
 
-        <input type="submit" value="Alterar Dados" name="btnAlterar"/>
-        
-    </form>
 </body>
 </html>

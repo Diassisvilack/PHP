@@ -80,7 +80,7 @@ class AlunoDAO {
     } 
 
     public function excluir($matrícula) {
-        $sql = "DELETE FROM aluno WHERE matrícula = :matr´tcula";
+        $sql = "DELETE FROM aluno WHERE matrícula = :matrítcula";
         $stmt = $this->conexao->prepare($sql);
         return $stmt->execute([':matrícula' => $matrícula]);
     }

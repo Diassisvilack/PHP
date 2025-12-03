@@ -1,22 +1,18 @@
 <?php
-require_once '../model/alunoDAO.php';
-
-// 1. Receber a matrícula a ser excluída (via GET)
-$matricula = filter_input(INPUT_GET, 'matricula', FILTER_SANITIZE_NUMBER_INT);
-
-if ($matricula) {
-    // 2. Chamar o DAO para excluir
-    $alunoDAO = new AlunoDAO();
-    $sucesso = $alunoDAO->excluir($matricula);
+    require_once '../model/DTO/AlunoDTO.php';
+    require_once '../model/DAO/AlunoDAO.php';
+    require_once '../model/DAO/conexao.php'; 
     
-    // 3. Redirecionar
-    if ($sucesso) {
-        header("Location: ../view/consultarAluno.php?msg=excluido");
-    } else {
-        header("Location: ../view/consultarAluno.php?msg=erro_excluir");
+    
+    if (!empty($_GET['id'])){ 
+
+        $id = $_GET['id'];
+
+        $AlunoDAO = new AlunoDAO($conexao);
+        
+        $AlunoDAO->excluirAluno($id); 
     }
-} else {
-    header("Location: ../view/consultarAluno.php?msg=erro_matricula");
-}
-exit();
+    
+    header("Location: ../view/consultarAluno.php");
+    exit; 
 ?>

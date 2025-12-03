@@ -1,69 +1,53 @@
-<?php
-require_once '../control/consultarAlunoControl.php';
-?>
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
- <meta charset="UTF-8">
-<title>Consultar Alunos</title>
- <link rel="stylesheet" href="../estilo.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Aluno</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" href="../css/estilo.css">
 </head>
 <body>
- <nav class="navbar">
-  <ul>
- <li><a href="index.php">Home</a></li>
- <li><a href="cadastrarAluno.php">Cadastrar</a></li>
- <li><a href="consultarAluno.php">Consultar</a></li>
-  </ul>
- </nav>
- <div class="container">
-  <h1>CONSULTAR ALUNOS</h1>
-  
-  <?php 
- if(isset($_GET['msg'])) {
- $msg = $_GET['msg'];
- $cor = (strpos($msg, 'erro') !== false) ? 'red' : 'green';
- 
- if ($msg == 'sucesso') $text = 'Aluno cadastrado com sucesso!';
- else if ($msg == 'excluido') $text = 'Aluno excluído com sucesso.';
- else if ($msg == 'alterado') $text = 'Dados do aluno alterados com sucesso.';
- else $text = 'Ocorreu um erro na operação.';
- 
- echo "<p style='color: {$cor}; font-weight: bold;'>{$text}</p>";
- }
- ?>
+    <nav>
+        <ul>
+            <li><a href="../index.php">Home</a></li>
+            <li><a href="cadastrarAluno.php">Cadastrar</a></li>
+            <li><a href="consultarAluno.php">Consultar</a></li>
+        </ul>
+    </nav>
 
- <table>
- <thead>
-  <tr>
-   <th>Matrícula</th>
-   <th>Nome</th>
-   <th>Telefone</th>
-   <th>Endereco</th>
-   <th>E-mail</th>
-   <th>Curso</th>
-  </tr>
-  </thead>
- <tbody>
-  <?php if (!empty($listaAlunos)): ?>
- <?php foreach ($listaAlunos as $aluno): ?>
-   <tr>
- <td><?php echo htmlspecialchars($aluno->matricula); ?></td>
- <td><?php echo htmlspecialchars($aluno->nome); ?></td>
-<td><?php echo htmlspecialchars($aluno->telefone); ?></td></tr>
- <td><?php echo htmlspecialchars($aluno->endereco); ?></td>
- <td><?php echo htmlspecialchars($aluno->email); ?></td>
-  <td><?php echo htmlspecialchars($aluno->curso); ?></td>
-  <td>
- <a href="alterarAluno.php?matricula=<?php echo $aluno->matricula; ?>">Alterar</a> |
- <a href="../control/excluirAlunoControl.php?matricula=<?php echo $aluno->matricula; ?>" onclick="return confirm('Tem certeza que deseja excluir o aluno <?php echo htmlspecialchars($aluno->nome); ?>?');">Excluir</a>
-  </td>
-  </tr>
- <?php endforeach; ?>
-<?php else: ?>
- <tr><td colspan="5">Nenhum aluno cadastrado.</td></tr>
- <?php endif; ?>
- </tbody>
-</table> </div>
-</body>
-</html>
+    <h1>Cadastrar Aluno</h1>
+
+    <form method="POST" action="../control/cadastrarAlunoControl.php">
+        <div>
+            <label>Matricula do Aluno: </label>     
+            <input type="text" name="Matricula"/>
+            <br><br>
+        </div>
+        
+        <div>
+            <label>Nome do Aluno: </label>     
+            <input type="text" name="Nome"/>
+            <br><br>
+        </div>
+
+        <div>
+            <label>Telefone do Aluno: </label>     
+            <input type="number" name="Telefone"/>
+            <br><br>
+        </div>
+
+        <div>
+            <label>E-mail: </label>     
+            <input type="text" name="E-mail"/>
+            <br><br>
+        </div>
+        
+        <div>
+            <label>Curso: </label>     
+            <input type="text" name="Curso"/>
+            <br><br>
+        </div>
+        
+        <div>
+            
